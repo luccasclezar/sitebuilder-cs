@@ -1,0 +1,63 @@
+.defaultDiv {
+    position: relative;
+    
+    height: 156px;
+    width: 100%;
+
+    background-color: #EEE;
+}
+
+.childDiv {
+    position: relative;
+
+    height: 126px;
+    width: 156px;
+
+    background-color: #FFF;
+    border-radius: 2px;
+}
+
+.defaultImage {
+    height: 60%;
+    width: 100%;
+
+    object-fit: cover;
+}
+
+.fullImage {
+    height: 256px;
+    width: 100%;
+
+    object-fit: cover;
+}
+
+.defaultLabel {
+    position: relative;
+
+    width: 100%;
+
+    font-size: 22px;
+    margin: 0;
+    text-align: center;
+}
+
+.materialButton {
+    background-color: transparent;
+    color: #FF3D00;
+    font-size: 16px;
+    padding: 8px 16px;
+}
+
+.floatingMaterialButton {
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    color: #FF3D00;
+    font-size: 16px;
+    padding: 8px 16px;
+    transition: box-shadow .3s;
+}
+
+.floatingMaterialButton:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}

@@ -1,0 +1,247 @@
+<html>
+
+<head>
+    <title>SiteBuilder 1.0</title>
+    
+    <script src="../js/bridge.min.js"></script>
+    <script src="../js/SiteBuilder.min.js"></script>
+
+    <script type="text/javascript" src="http://livejs.com/live.js"></script>
+
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/icon?family=Roboto" rel="stylesheet">
+
+    <script type="text/javascript" src="../libraries/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../libraries/jquery.transit.min.js"></script>
+    <link rel="stylesheet" href="../libraries/Waves/waves.min.css">
+    <script type="text/javascript" src="../libraries/Waves/waves.min.js"></script>
+    <script type="text/javascript" src="../libraries/storage.min.js"></script>
+    <script type="text/javascript" src="../libraries/parallax.min.js"></script>
+
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/controls.css">
+    <link rel="stylesheet" href="../css/properties.css">
+
+    <script type="text/javascript" src="../js/Theme.js"></script>
+    <script type="text/javascript" src="../js/Control.js"></script>
+    <script type="text/javascript" src="../js/global.js"></script>
+    <script type="text/javascript" src="../js/ContextMenu.js"></script>
+    <script type="text/javascript" src="../js/index.js"></script>
+</head>
+
+<body>
+    <div class="shadow-2" id="navbar">
+        <button class="navButton" id="listButton" onclick="toggleControlsList()"><i class="material-icons">list</i></button>
+        <button class="navButton" id="saveButton" onclick="save()"><i class="material-icons">save</i></button>
+        <button class="navButton" id="loadButton" onclick="load()"><i class="material-icons">folder</i></button>
+        <button class="navButton" id="themeButton" onclick="themeClicked()"><i class="material-icons">color_lens</i></button>
+        <p>SiteBuilder 1.0</p>
+    </div>
+    <div class="shadow-2 rightNav" id="controlsList">
+    </div>
+    <div class="shadow-2 rightNav" id="theme">
+        <div class="property">
+            <p class="propertyName">Theme</p>
+            <select id="theme-Theme" class="propertyValue selectProperty">
+                <option value="light" selected="selected">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+        </div>
+        <div class="divider"></div>
+        <div class="property">
+            <p class="propertyName">Primary</p>
+            <input type="text" placeholder="ffffff" id="theme-Primary" class="propertyValue textInput" />
+        </div>
+        <div class="property">
+            <p class="propertyName">Primary Dark</p>
+            <input type="text" placeholder="ffffff" id="theme-PrimaryDark" class="propertyValue textInput" />
+        </div>
+        <div class="property">
+            <p class="propertyName">Accent</p>
+            <input type="text" placeholder="ffffff" id="theme-Accent" class="propertyValue textInput" />
+        </div>
+        <div class="divider"></div>
+        <p style="padding: 0 16px 0 16px; text-align: justify">
+        To use the theme colors just write the name of the color instead of a Hex or RGB value. <br><br>
+        All colors were taken from Material Design Guidelines (except "Background" with Light Theme, that has a slight difference) and the colors 
+        "Background", "Card", "TextPrimary", "TextSecondary" and "TextDisabled" are Theme dependant (these three text colors are the same as the black and white 
+        variants but change based on the theme).<br><br>
+        Available colors:<br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;Primary<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;PrimaryDark<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;Accent<br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;Background<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;BackgroundDark<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;Card<br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;TextPrimary<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;TextSecondary<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;TextDisabled<br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;TextPrimaryWhite<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;TextSecondaryWhite<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;TextDisabledWhite<br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;TextPrimaryBlack<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;TextSecondaryBlack<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;TextDisabledBlack</p>
+    </div>
+    <div class="shadow-2" id="navTools">
+        <button class="toolButton" id="divButton" onclick="divButtonClicked()" />
+        <label for="divButton"><i class="material-icons">view_day</i></label>
+
+        <button class="toolButton" id="imageButton" onclick="imageButtonClicked()" />
+        <label for="imageButton"><i class="material-icons">photo</i></label>
+
+        <button class="toolButton" id="labelButton" onclick="labelButtonClicked()" />
+        <label for="labelButton"><i class="material-icons">text_fields</i></label>
+
+        <button class="toolButton" id="buttonButton" onclick="buttonButtonClicked()" />
+        <label for="buttonButton"><i class="material-icons">view_stream</i></label>
+    </div>
+    <div id="siteArea">
+
+    </div>
+    <div class="shadow-4" id="contextMenu">
+        <div class="property menuHeader">
+            <b><p class="propertyName" id="controlName">Label</p></b>
+
+            <div>
+                <button class="contextMenuButton" id="close" onclick="closeMenu()" />
+                <label for="close"><i class="material-icons">close</i></label>
+
+                <button class="contextMenuButton" id="delete" onclick="deleteControl()" />
+                <label for="delete"><i class="material-icons">delete</i></label>
+
+                <button class="contextMenuButton" id="moveUp" onclick="moveUp()" />
+                <label for="moveUp"><i class="material-icons">keyboard_arrow_up</i></label>
+
+                <button class="contextMenuButton" id="moveDown" onclick="moveDown()" />
+                <label for="moveDown"><i class="material-icons">keyboard_arrow_down</i></label>
+
+                <button class="contextMenuButton" id="event" onclick="event()" />
+                <label for="event"><i class="material-icons">touch_app</i></label>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div id="marginPropertyDiv" class="property">
+            <p class="propertyName">Margin</p>
+            <div>
+                <input type="text" placeholder="Bottom" id="marginBottomProperty" class="propertyValue textInput sameRow-Text" />
+                <input type="text" placeholder="Right" id="marginRightProperty" class="propertyValue textInput sameRow-Text" />
+                <input type="text" placeholder="Top" id="marginTopProperty" class="propertyValue textInput sameRow-Text" />
+                <input type="text" placeholder="Left" id="marginLeftProperty" class="propertyValue textInput sameRow-Text" />
+            </div>
+        </div>
+        <div id="positionPropertyDiv" class="property">
+            <p class="propertyName">Position</p>
+            <div>
+                <input type="text" placeholder="Bottom" id="bottomProperty" class="propertyValue textInput sameRow-Text" />
+                <input type="text" placeholder="Right" id="rightProperty" class="propertyValue textInput sameRow-Text" />
+                <input type="text" placeholder="Top" id="topProperty" class="propertyValue textInput sameRow-Text" />
+                <input type="text" placeholder="Left" id="leftProperty" class="propertyValue textInput sameRow-Text" />
+                <input type="text" placeholder="Height" id="heightProperty" class="propertyValue textInput sameRow-Text" />
+                <input type="text" placeholder="Width" id="widthProperty" class="propertyValue textInput sameRow-Text" />
+            </div>
+        </div>
+        <div id="horizontalAlignmentPropertyDiv" class="property">
+            <p class="propertyName">Horizontal Alignment</p>
+            <select id="horizontalAlignmentProperty" class="propertyValue selectProperty">
+                    <option value="left" selected="selected">Left</option>
+                    <option value="right">Right</option>
+                </select>
+        </div>
+        <div id="verticalAlignmentPropertyDiv" class="property">
+            <p class="propertyName">Vertical Alignment</p>
+            <select id="verticalAlignmentProperty" class="propertyValue selectProperty">
+                    <option value="flex-start">Top</option>
+                    <option value="center" selected="selected">Center</option>
+                    <option value="flex-end">Bottom</option>
+                </select>
+        </div>
+        <div class="divider"></div>
+        <div id="colorPropertyDiv" class="property">
+            <p class="propertyName">Color</p>
+            <input type="text" placeholder="ffffff" id="colorProperty" class="propertyValue textInput" />
+        </div>
+        <div id="elevationPropertyDiv" class="property">
+            <p class="propertyName">Elevation</p>
+            <div>
+                <label style="float: right; font-size: 18px;" for="insetValue">Inset shadow</label>
+                <input type="checkbox" placeholder="0" id="insetProperty" class="propertyValue" />
+                <input style="width: 30px" type="text" placeholder="0" id="elevationProperty" class="propertyValue textInput" />
+            </div>
+        </div>
+        <div id="fontColorPropertyDiv" class="property">
+            <p class="propertyName">Font Color</p>
+            <input type="text" placeholder="ffffff" id="fontColorProperty" class="propertyValue textInput" />
+        </div>
+        <div id="fontSizePropertyDiv" class="property">
+            <p class="propertyName">Font Size</p>
+            <input type="text" placeholder="px, em" id="fontSizeProperty" class="propertyValue textInput" />
+        </div>
+        <div id="horizontalTextAlignmentPropertyDiv" class="property">
+            <p class="propertyName">Horizontal Text Alignment</p>
+            <select id="horizontalTextAlignmentProperty" class="propertyValue selectProperty">
+                    <option value="left">Left</option>
+                    <option value="center" selected="selected">Center</option>
+                    <option value="right">Right</option>
+                    <option value="justify">Justify</option>
+                </select>
+        </div>
+        <div id="paddingPropertyDiv" class="property">
+            <p class="propertyName">Padding</p>
+            <div>
+                <input type="text" placeholder="Bottom" id="paddingBottomProperty" class="propertyValue textInput sameRow-Text" />
+                <input type="text" placeholder="Right" id="paddingRightProperty" class="propertyValue textInput sameRow-Text" />
+                <input type="text" placeholder="Top" id="paddingTopProperty" class="propertyValue textInput sameRow-Text" />
+                <input type="text" placeholder="Left" id="paddingLeftProperty" class="propertyValue textInput sameRow-Text" />
+            </div>
+        </div>
+        <div id="sourcePropertyDiv" class="property">
+            <p class="propertyName">Source</p>
+            <div style="display: flex; align-items: center;">
+                <button style="margin-right: 16px;" onclick="SiteBuilder.ContextMenu.clearImageClicked()" class="propertyValue floatingMaterialButton">CLEAR</button>
+                <input type="file" placeholder="File" id="fileSourceProperty" class="propertyValue" />
+            </div>
+        </div>
+        <div id="textPropertyDiv" class="property">
+            <p class="propertyName">Text</p>
+            <textarea placeholder="Text" id="textProperty" class="propertyValue textArea"></textarea>
+        </div>
+    </div>
+    <div id="saveDialog" class="dialog">
+        <div class="dialogCard" id="saveCard">
+            <p>Save</p>
+            <input type="text" id="saveName" placeholder="Name" class="textArea" />
+            <div class="buttonsLayout">
+                <button onclick="dialogSave()" class="materialButton">SAVE</button>
+                <button onclick="dialogCancel('saveDialog')" class="materialButton">CANCEL</button>
+            </div>
+        </div>
+    </div>
+    <div id="loadDialog" class="dialog">
+        <div class="dialogCard" id="loadCard">
+            <p>Load</p>
+            <div id="savesList">
+            </div>
+            <div class="buttonsLayout">
+                <button onclick="dialogCancel('loadDialog')" class="materialButton">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $('.textArea').on('input', function () {
+            this.style.height = "5px";
+            this.style.height = (this.scrollHeight) + "px";
+        });
+
+        Waves.init({ duration: 500 });
+        Waves.attach('.toolButton');
+        Waves.attach('.contextMenuButton');
+        Waves.attach('.navButton');
+        Waves.attach('.listControl');
+        Waves.attach('.materialButton', ['waves-button']);
+        Waves.attach('.floatingMaterialButton');
+    </script>
+</body>
+
+</html>

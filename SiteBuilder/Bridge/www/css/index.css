@@ -1,0 +1,318 @@
+/* 
+Colors:
+
+Primary
+T500 #009688
+T700 #00796B
+T900 #004D40
+
+Accent
+A400 #FF3D00
+A700 #DD2C00
+*/
+
+.shadow-1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.shadow-2 {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.shadow-3 {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.shadow-4 {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.shadow-5 {
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+body {
+    margin: 0px;
+    font-family: Roboto;
+    pointer-events: auto;
+}
+
+p {
+    word-wrap: break-word;
+}
+
+button {
+    border: none;
+}
+
+*:focus {
+    outline: none;
+}
+
+#navbar {
+    position: fixed;
+    height: 56px;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: #EEE;
+    color: rgba(0, 0, 0, .87);
+    font-family: Roboto;
+    font-size: 22px;
+    line-height: 56px;
+    text-indent: 16px;
+    z-index: 101;
+}
+
+#navbar p {
+    width: 20%;
+
+    margin: 0px;
+}
+
+.navButton {
+    height: 100%;
+    width: 56px;
+
+    background-color: transparent;
+    float: right;
+    margin: 0px;
+}
+
+.rightNav {
+    position: fixed;
+    
+    top: 56px;
+    left: 100%;
+
+    width: 512px;
+    max-height: calc(100% - 56px);
+    height: calc(100% - 56px);
+
+    background-color: #EEE;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.listControl {
+    width: 100%;
+
+    font-size: 18px;
+    text-indent: 16px;
+}
+
+#navTools {
+    position: fixed;
+    width: 64px;
+    bottom: 0px;
+    left: 0px;
+    top: 56px;
+    background-color: #EEE;
+    z-index: 99;
+}
+
+.toolButton {
+    height: 64px;
+    width: 64px;
+    color: rgba(0, 0, 0, .87);
+    background-color: transparent;
+    border: none;
+    transition: color .4s;
+}
+
+.toolButton:hover {
+    color: #FF3D00;
+}
+
+.toolButton:focus {
+    outline: none;
+}
+
+.toolButton label i {
+    position: relative;
+    cursor: pointer;
+    font-size: 32px;
+    z-index: 1;
+}
+
+#siteArea {
+    position: absolute;
+    left: 64px;
+    right: 0px;
+    top: 56px;
+    display: inline-block;
+}
+
+#contextMenu {
+    position: absolute;
+    height: auto;
+    width: 60%;
+    top: 64px;
+    background-color: #EEE;
+    border-radius: 4px;
+    color: rgba(0,0,0,.87);
+    margin-left: 72px;
+    visibility: hidden;
+    z-index: 98;
+}
+
+.divider {
+    height: 1px;
+    width: 100%;
+
+    background-color: rgba(0,0,0, .2);
+}
+
+#contextMenu i {
+    position: relative;
+    color: rgba(0,0,0,.87);
+    cursor: pointer;
+    z-index: 11;
+}
+
+.contextMenuButton {
+    height: 64px;
+    width: 64px;
+    background-color: transparent;
+    border: none;
+    float: right;
+}
+
+.contextMenuButton #label i {
+    font-size: 32px;
+}
+
+::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: rgba(0,0,0,.54);
+}
+
+:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: rgba(0,0,0,.54);
+}
+
+::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: rgba(0,0,0,.54);
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: rgba(0,0,0,.54);
+}
+
+#snackbar {
+    height: 64px;
+    width: 100%;
+    align-items: center;
+    background-color: #424242;
+    color: white;
+    font-size: 16px;
+    line-height: 64px;
+    text-indent: 24px;
+    z-index: 102;
+}
+
+#snackbarButton {
+    position: absolute;
+    height: 100%;
+    width: auto;
+    right: 0px;
+    background-color: transparent;
+    border: none;
+    color: #ff3d00;
+    font-size: 16px;
+    padding: 0 24px;
+}
+
+.materialButton {
+    background-color: transparent;
+    color: #FF3D00;
+    font-size: 16px;
+    padding: 8px 16px;
+}
+
+.floatingMaterialButton {
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    color: #FF3D00;
+    font-size: 16px;
+    padding: 8px 16px;
+    transition: box-shadow .3s;
+}
+
+.floatingMaterialButton:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.dialog {
+    position: fixed;
+
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+
+    background-color: rgba(0,0,0,.7);
+    z-index: 102;
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dialogCard {
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 8px 8px rgba(0,0,0,.4);
+    font-size: 22px;
+    padding: 16px;
+}
+
+.dialogCard p {
+    margin: 0 0 24px 0;
+}
+
+#saveCard {
+    position: absolute;
+
+    top: calc(50% - 66px);
+    left: calc(50% - 174px);
+
+    height: 132px;
+    width: 348px;
+}
+
+#saveCard input {
+    width: 100%;
+
+    margin-bottom: 24px;
+}
+
+#loadCard {
+    position: absolute;
+    
+    top: calc(50% - 228px);
+    left: calc(50% - 174px);
+
+    height: 456px;
+    width: 348px;
+}
+
+.saveEntry {
+    width: 100%;
+    font-size: 18px;
+    margin: 0 !important;
+    padding: 8px 0;
+    text-indent: 16px;
+}
+
+.buttonsLayout {
+    position: absolute;
+
+    bottom: 16px;
+    right: 16px;
+
+    float: right;
+}

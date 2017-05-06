@@ -1,0 +1,81 @@
+.property {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 16px;
+}
+
+/************ Header ************/
+.menuHeader {
+    margin: 0 0 0 16px !important;
+}
+
+.menuHeader p {
+    font-size: 22px;
+}
+
+/************ General ************/
+.propertyName {
+    float: left;
+    font-family: Roboto;
+    font-size: 18px;
+    margin: 4px 0px;
+}
+
+.propertyValue {
+    float: right;
+}
+
+/************ TextInput ************/
+.textInput {
+    height: 24px;
+    width: 128px;
+    background-color: transparent;
+    border: none;
+    color: rgba(0,0,0,.87);
+    font-size: 16px;
+}
+
+.sameRow-Text {
+    width: 64px;
+    margin: 0 4px;
+}
+
+/************ TextArea ************/
+.textArea {
+    height: 25px;
+    min-height: 26px;
+    width: 80%;
+
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,.4);
+    color: rgba(0,0,0,.87);
+    font-size: 16px;
+    max-height: 200px;
+    padding-bottom: 4px;
+    resize: vertical;
+    transition: border-bottom .25s;
+}
+
+.textArea:focus {
+    outline: none;
+    border-bottom: 1px solid #ff3d00;
+}
+
+/************ Select ************/
+.selectProperty {
+    height: 32px;
+    width: 128px;
+
+    background-color: transparent;
+    border: none;
+    color: rgba(0,0,0,.87);
+    font-size: 14px;
+    outline: none;
+}
+
+.selectProperty option {
+    background-color: #EEE;
+}
