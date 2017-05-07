@@ -3,6 +3,7 @@ using Bridge.Html5;
 using Bridge.jQuery2;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SiteBuilder
 {
@@ -54,7 +55,7 @@ namespace SiteBuilder
         public string PaddingRight { get; set; }
         public string PaddingBottom { get; set; }
 
-        public List<Control> Children { get; set; }
+        public List<int> Children { get; set; }
 
         public ContainerControl()
         {
@@ -65,6 +66,8 @@ namespace SiteBuilder
 
     public class ImageControl : Control
     {
+        public static string DefaultImage = "../images/default_image.jpg";
+
         public string Aspect { get; set; }
         public int Elevation { get; set; }
         public string Source { get; set; }
@@ -100,35 +103,35 @@ namespace SiteBuilder
 
     public static class ControlExtensions
     {
-        public static void UpdateColors(this Control control)
+        public static void UpdateColors<T>(this T control) where T : Control
         {
-            foreach(var propertyInfo in control.GetType().GetProperties(System.Reflection.BindingFlags.Public))
-            {
-                if(propertyInfo.Name == "updateColors" && propertyInfo.Name.ToLowerCase().Contains("colors"))
-                {
-                    var val = ((string)propertyInfo.GetValue(control));
-                    if (new[] { nameof(Theme.Primary), nameof(Theme.PrimaryDark), nameof(Theme.Accent),
+            Script.Write(@"
+            for (var key in control) {
+                if (!key.includes('get') && !key.includes('set') && control[key] && key.toLowerCase().includes('color')) {
+                    var val = control[key].charAt(0).toLowerCase() + control[key].slice(1);");
+            
+            if (new[] { nameof(Theme.Primary), nameof(Theme.PrimaryDark), nameof(Theme.Accent),
                         nameof(Theme.Background), nameof(Theme.BackgroundDark), nameof(Theme.Card),
                         nameof(Theme.TextPrimary), nameof(Theme.TextSecondary), nameof(Theme.TextDisabled),
                         nameof(Theme.TextPrimaryBlack), nameof(Theme.TextSecondaryBlack), nameof(Theme.TextDisabledBlack),
-                        nameof(Theme.TextPrimaryWhite), nameof(Theme.TextSecondaryWhite), nameof(Theme.TextDisabledWhite), }.Contains(val))
-                    {
-                        var cssAttr = "";
-                        switch(propertyInfo.Name)
-                        {
-                            case nameof(ContainerControl.Color):
-                                cssAttr = "background-color";
-                                break;
-                            case nameof(LabelControl.FontColor):
-                                cssAttr = "color";
-                                break;
-                        }
-
-                        var themeProp = (string)typeof(Theme).GetProperty(val, System.Reflection.BindingFlags.Public).GetValue(App.Theme);
-                        var hashtag = !themeProp.Contains("r") && !themeProp.Contains("#") ? "#" : "";
-                        new jQuery(Global.GetElementByIdentifier(control.Identifier)).Css(cssAttr, hashtag + themeProp);
-                    }
+                        nameof(Theme.TextPrimaryWhite), nameof(Theme.TextSecondaryWhite), nameof(Theme.TextDisabledWhite), }.Contains(Script.Write<string>("val")))
+            {
+                var cssAttr = "";
+                switch (Script.Write<string>("key").LowerFirst())
+                {
+                    case nameof(ContainerControl.Color):
+                        cssAttr = "background-color";
+                        break;
+                    case nameof(LabelControl.FontColor):
+                        cssAttr = "color";
+                        break;
                 }
+
+                var themeProp = (App.Theme[Script.Write<string>("val").UpperFirst()] as string);
+                var hashtag = !themeProp.Contains("r") && !themeProp.Contains("#") ? "#" : "";
+                new jQuery(Global.GetElementByIdentifier(control.Identifier)).Css(cssAttr, hashtag + themeProp);
+
+                Script.Write("}\n}");
             }
         }
     }

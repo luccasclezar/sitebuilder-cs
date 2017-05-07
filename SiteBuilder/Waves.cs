@@ -9,5 +9,10 @@ namespace SiteBuilder
         {
             Script.Write("Waves.attach(selector)");
         }
+
+        public static void Attach(string selector, string[] styles)
+        {
+            Script.Write("Waves.attach(selector, styles)");
+        }
     }
 }

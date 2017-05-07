@@ -1,6 +1,6 @@
 {
   "output": "Bridge/www/js",
-  "outputFormatting": "Minified"
+  //"outputFormatting": "Minified"
     
     // Uncomment to add TypeScript Definition file (.d.ts) generation to your project.
     // , "generateTypeScript": true

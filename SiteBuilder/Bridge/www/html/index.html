@@ -4,7 +4,7 @@
     <title>SiteBuilder 1.0</title>
     
     <script src="../js/bridge.min.js"></script>
-    <script src="../js/SiteBuilder.min.js"></script>
+    <script src="../js/SiteBuilder.js"></script>
 
     <script type="text/javascript" src="http://livejs.com/live.js"></script>
 
@@ -21,20 +21,14 @@
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/controls.css">
     <link rel="stylesheet" href="../css/properties.css">
-
-    <script type="text/javascript" src="../js/Theme.js"></script>
-    <script type="text/javascript" src="../js/Control.js"></script>
-    <script type="text/javascript" src="../js/global.js"></script>
-    <script type="text/javascript" src="../js/ContextMenu.js"></script>
-    <script type="text/javascript" src="../js/index.js"></script>
 </head>
 
 <body>
     <div class="shadow-2" id="navbar">
-        <button class="navButton" id="listButton" onclick="toggleControlsList()"><i class="material-icons">list</i></button>
-        <button class="navButton" id="saveButton" onclick="save()"><i class="material-icons">save</i></button>
-        <button class="navButton" id="loadButton" onclick="load()"><i class="material-icons">folder</i></button>
-        <button class="navButton" id="themeButton" onclick="themeClicked()"><i class="material-icons">color_lens</i></button>
+        <button class="navButton" id="listButton" onclick="SiteBuilder.App.toggleControlsList()"><i class="material-icons">list</i></button>
+        <button class="navButton" id="saveButton" onclick="SiteBuilder.SaveLoad.save()"><i class="material-icons">save</i></button>
+        <button class="navButton" id="loadButton" onclick="SiteBuilder.SaveLoad.load()"><i class="material-icons">folder</i></button>
+        <button class="navButton" id="themeButton" onclick="SiteBuilder.App.themeClicked()"><i class="material-icons">color_lens</i></button>
         <p>SiteBuilder 1.0</p>
     </div>
     <div class="shadow-2 rightNav" id="controlsList">
@@ -84,16 +78,16 @@
         &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;TextDisabledBlack</p>
     </div>
     <div class="shadow-2" id="navTools">
-        <button class="toolButton" id="divButton" onclick="divButtonClicked()" />
+        <button class="toolButton" id="divButton" onclick="SiteBuilder.App.containerClicked()" />
         <label for="divButton"><i class="material-icons">view_day</i></label>
 
-        <button class="toolButton" id="imageButton" onclick="imageButtonClicked()" />
+        <button class="toolButton" id="imageButton" onclick="SiteBuilder.App.imageClicked()" />
         <label for="imageButton"><i class="material-icons">photo</i></label>
 
-        <button class="toolButton" id="labelButton" onclick="labelButtonClicked()" />
+        <button class="toolButton" id="labelButton" onclick="SiteBuilder.App.labelClicked()" />
         <label for="labelButton"><i class="material-icons">text_fields</i></label>
 
-        <button class="toolButton" id="buttonButton" onclick="buttonButtonClicked()" />
+        <button class="toolButton" id="buttonButton" onclick="SiteBuilder.App.buttonClicked()" />
         <label for="buttonButton"><i class="material-icons">view_stream</i></label>
     </div>
     <div id="siteArea">
@@ -104,16 +98,16 @@
             <b><p class="propertyName" id="controlName">Label</p></b>
 
             <div>
-                <button class="contextMenuButton" id="close" onclick="closeMenu()" />
+                <button class="contextMenuButton" id="close" onclick="SiteBuilder.ContextMenu.closeMenu()" />
                 <label for="close"><i class="material-icons">close</i></label>
 
-                <button class="contextMenuButton" id="delete" onclick="deleteControl()" />
+                <button class="contextMenuButton" id="delete" onclick="SiteBuilder.ContextMenu.deleteControl()" />
                 <label for="delete"><i class="material-icons">delete</i></label>
 
-                <button class="contextMenuButton" id="moveUp" onclick="moveUp()" />
+                <button class="contextMenuButton" id="moveUp" onclick="SiteBuilder.ContextMenu.moveUp()" />
                 <label for="moveUp"><i class="material-icons">keyboard_arrow_up</i></label>
 
-                <button class="contextMenuButton" id="moveDown" onclick="moveDown()" />
+                <button class="contextMenuButton" id="moveDown" onclick="SiteBuilder.ContextMenu.moveDown()" />
                 <label for="moveDown"><i class="material-icons">keyboard_arrow_down</i></label>
 
                 <button class="contextMenuButton" id="event" onclick="event()" />
@@ -213,7 +207,7 @@
             <input type="text" id="saveName" placeholder="Name" class="textArea" />
             <div class="buttonsLayout">
                 <button onclick="dialogSave()" class="materialButton">SAVE</button>
-                <button onclick="dialogCancel('saveDialog')" class="materialButton">CANCEL</button>
+                <button onclick="SiteBuilder.SaveLoad.dialogCancel('saveDialog')" class="materialButton">CANCEL</button>
             </div>
         </div>
     </div>
@@ -223,7 +217,7 @@
             <div id="savesList">
             </div>
             <div class="buttonsLayout">
-                <button onclick="dialogCancel('loadDialog')" class="materialButton">CANCEL</button>
+                <button onclick="SiteBuilder.SaveLoad.dialogCancel('loadDialog')" class="materialButton">CANCEL</button>
             </div>
         </div>
     </div>
