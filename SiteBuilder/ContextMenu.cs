@@ -15,7 +15,7 @@ namespace SiteBuilder
             var control = App.Controls.First(item => item.Key == jElement.Data<int>(Constants.Identifier).ToString()).Value;
             var left = control.Left ?? "0px";
             var right = control.Right ?? "0px";
-            var width = control.Width ?? "0px";
+            var width = control.Width ?? "100%";
             string paddingLeft = "0";
             string paddingRight = "0";
 
@@ -106,7 +106,7 @@ namespace SiteBuilder
             App.contextMenuVisible = true;
         }
 
-        public static void UpdateValues(Control control)
+        public static void UpdateValues<T>(T control) where T : Control
         {
             var contextMenu = new jQuery("#contextMenu");
             for (int i = 2; i < contextMenu.Children().Length; i++)
@@ -115,15 +115,46 @@ namespace SiteBuilder
                     contextMenu.Children().Eq(i).Hide();
             }
 
+            Script.Write("for(var key in control) {");
+            Script.Write("if (key.includes('$') || (typeof control[key] !== 'string' && typeof control[key] !== 'object')) continue;");
+
+            var Key = Script.Write<string>("key");
+
+            if (!string.IsNullOrEmpty(Script.Write<string>("control[key]")))
+                new jQuery("#" + Key.LowerFirst() + "Property").Val(Script.Write<string>("control[key]"));
+            else
+                new jQuery("#" + Key.LowerFirst() + "Property").Val("");
+
+            if (Key.Contains("Left") || Key.Contains("Top") || Key.Contains("Right") || Key.Contains("Bottom"))
+                Key = Key.Replace(new Bridge.Text.RegularExpressions.Regex("Left|Right|Top|Bottom"), "");
+            new jQuery("#" + Key.LowerFirst() + "PropertyDiv").Show();
+
+            Script.Write("}");
+
             // Its not necessary to add other properties because they are on the same div
-            if (Script.Write<bool>("'MarginLeft' in control"))
+            /*if (Script.Write<bool>("'MarginLeft' in control"))
             {
                 new jQuery("#marginPropertyDiv").Show();
 
-                if (string.IsNullOrEmpty(control.MarginLeft))
+                if (!string.IsNullOrEmpty(control.MarginLeft))
                     new jQuery("#marginLeftProperty").Val(control.MarginLeft);
                 else
                     new jQuery("#marginLeftProperty").Val("");
+
+                if (string.IsNullOrEmpty(control.MarginTop))
+                    new jQuery("#marginTopProperty").Val(control.MarginTop);
+                else
+                    new jQuery("#marginTopProperty").Val("");
+
+                if (string.IsNullOrEmpty(control.MarginRight))
+                    new jQuery("#marginRightProperty").Val(control.MarginRight);
+                else
+                    new jQuery("#marginRightProperty").Val("");
+
+                if (string.IsNullOrEmpty(control.MarginBottom))
+                    new jQuery("#marginBottomProperty").Val(control.MarginBottom);
+                else
+                    new jQuery("#marginBottomProperty").Val("");
             }
             if (Script.Write<bool>("'PaddingLeft' in control"))
             {
@@ -134,6 +165,24 @@ namespace SiteBuilder
                     new jQuery("#paddingLeftProperty").Val(prop);
                 else
                     new jQuery("#paddingLeftProperty").Val("");
+
+                prop = Script.Write<string>("control['PaddingTop']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#paddingTopProperty").Val(prop);
+                else
+                    new jQuery("#paddingTopProperty").Val("");
+
+                prop = Script.Write<string>("control['PaddingRight']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#paddingRightProperty").Val(prop);
+                else
+                    new jQuery("#paddingRightProperty").Val("");
+
+                prop = Script.Write<string>("control['PaddingBottom']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#paddingBottomProperty").Val(prop);
+                else
+                    new jQuery("#paddingBottomProperty").Val("");
             }
             if (Script.Write<bool>("'Width' in control"))
             {
@@ -141,6 +190,31 @@ namespace SiteBuilder
 
                 if (string.IsNullOrEmpty(control.Width))
                     new jQuery("#widthProperty").Val(control.Width);
+                else
+                    new jQuery("#widthProperty").Val("");
+
+                if (string.IsNullOrEmpty(control.Height))
+                    new jQuery("#heightProperty").Val(control.Height);
+                else
+                    new jQuery("#heightProperty").Val("");
+
+                if (string.IsNullOrEmpty(control.Left))
+                    new jQuery("#widthProperty").Val(control.Left);
+                else
+                    new jQuery("#widthProperty").Val("");
+
+                if (string.IsNullOrEmpty(control.Top))
+                    new jQuery("#widthProperty").Val(control.Top);
+                else
+                    new jQuery("#widthProperty").Val("");
+
+                if (string.IsNullOrEmpty(control.Right))
+                    new jQuery("#widthProperty").Val(control.Right);
+                else
+                    new jQuery("#widthProperty").Val("");
+
+                if (string.IsNullOrEmpty(control.Bottom))
+                    new jQuery("#widthProperty").Val(control.Bottom);
                 else
                     new jQuery("#widthProperty").Val("");
             }
@@ -253,7 +327,7 @@ namespace SiteBuilder
                     new jQuery("#verticalAlignmentProperty").Val(prop);
                 else
                     new jQuery("#verticalAlignmentProperty").Val("center");
-            }
+            }*/
         }
 
         public static void SetBindings()
@@ -347,7 +421,7 @@ namespace SiteBuilder
                 App.Controls[new jQuery(App.ContextMenuControlRef).Data<int>(Constants.Identifier).ToString()].Height = new jQuery("#heightProperty").Val();
             });
             /********** Position end **********/
-            
+
             new jQuery("#colorProperty").On("input", () =>
             {
                 var val = new jQuery("#colorProperty").Val();

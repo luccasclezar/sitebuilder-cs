@@ -224,7 +224,7 @@ Bridge.assembly("SiteBuilder", function ($asm, globals) {
                     }).value;
                 var left = ($t = control.getLeft(), $t != null ? $t : "0px");
                 var right = ($t1 = control.getRight(), $t1 != null ? $t1 : "0px");
-                var width = ($t2 = control.getWidth(), $t2 != null ? $t2 : "0px");
+                var width = ($t2 = control.getWidth(), $t2 != null ? $t2 : "100%");
                 var paddingLeft = "0";
                 var paddingRight = "0";
 
@@ -310,11 +310,11 @@ Bridge.assembly("SiteBuilder", function ($asm, globals) {
                 $(SiteBuilder.App.contextMenuControlRef).css("border", "1px solid #FF3D00");
 
                 var control = SiteBuilder.App.controls.get($(SiteBuilder.App.contextMenuControlRef).data(SiteBuilder.Constants.identifier).toString());
-                SiteBuilder.ContextMenu.updateValues(control);
+                SiteBuilder.ContextMenu.updateValues(SiteBuilder.Control, control);
 
                 SiteBuilder.App.contextMenuVisible = true;
             },
-            updateValues: function (control) {
+            updateValues: function (T, control) {
                 var contextMenu = $("#contextMenu");
                 for (var i = 2; i < contextMenu.children().length; i = (i + 1) | 0) {
                     if (!Bridge.referenceEquals(contextMenu.children().get(i).className, "divider")) {
@@ -322,145 +322,221 @@ Bridge.assembly("SiteBuilder", function ($asm, globals) {
                     }
                 }
 
+                for(var key in control) {;
+                if (key.includes('$') || (typeof control[key] !== 'string' && typeof control[key] !== 'object')) continue;
+
+                var Key = key;
+
+                if (!System.String.isNullOrEmpty(control[key])) {
+                    $(System.String.concat("#", SiteBuilder.Global.lowerFirst(Key), "Property")).val(control[key]);
+                } else {
+                    $(System.String.concat("#", SiteBuilder.Global.lowerFirst(Key), "Property")).val("");
+                }
+
+                if (System.String.contains(Key,"Left") || System.String.contains(Key,"Top") || System.String.contains(Key,"Right") || System.String.contains(Key,"Bottom")) {
+                    Key = Key.replace(new RegExp("Left|Right|Top|Bottom"), "");
+                }
+                $(System.String.concat("#", SiteBuilder.Global.lowerFirst(Key), "PropertyDiv")).show();
+
+                };
+
                 // Its not necessary to add other properties because they are on the same div
-                if ('MarginLeft' in control) {
-                    $("#marginPropertyDiv").show();
+                /* if (Script.Write<bool>("'MarginLeft' in control"))
+            {
+                new jQuery("#marginPropertyDiv").Show();
 
-                    if (System.String.isNullOrEmpty(control.getMarginLeft())) {
-                        $("#marginLeftProperty").val(control.getMarginLeft());
-                    } else {
-                        $("#marginLeftProperty").val("");
-                    }
-                }
-                if ('PaddingLeft' in control) {
-                    $("#paddingPropertyDiv").show();
+                if (!string.IsNullOrEmpty(control.MarginLeft))
+                    new jQuery("#marginLeftProperty").Val(control.MarginLeft);
+                else
+                    new jQuery("#marginLeftProperty").Val("");
 
-                    var prop = control['PaddingLeft'];
-                    if (System.String.isNullOrEmpty(prop)) {
-                        $("#paddingLeftProperty").val(prop);
-                    } else {
-                        $("#paddingLeftProperty").val("");
-                    }
-                }
-                if ('Width' in control) {
-                    $("#positionPropertyDiv").show();
+                if (string.IsNullOrEmpty(control.MarginTop))
+                    new jQuery("#marginTopProperty").Val(control.MarginTop);
+                else
+                    new jQuery("#marginTopProperty").Val("");
 
-                    if (System.String.isNullOrEmpty(control.getWidth())) {
-                        $("#widthProperty").val(control.getWidth());
-                    } else {
-                        $("#widthProperty").val("");
-                    }
-                }
+                if (string.IsNullOrEmpty(control.MarginRight))
+                    new jQuery("#marginRightProperty").Val(control.MarginRight);
+                else
+                    new jQuery("#marginRightProperty").Val("");
 
-                if ('Color' in control) {
-                    $("#colorPropertyDiv").show();
+                if (string.IsNullOrEmpty(control.MarginBottom))
+                    new jQuery("#marginBottomProperty").Val(control.MarginBottom);
+                else
+                    new jQuery("#marginBottomProperty").Val("");
+            }
+            if (Script.Write<bool>("'PaddingLeft' in control"))
+            {
+                new jQuery("#paddingPropertyDiv").Show();
 
-                    var prop1 = control['Color'];
-                    if (System.String.isNullOrEmpty(prop1)) {
-                        $("#colorProperty").val(prop1);
-                    } else {
-                        $("#colorProperty").val("");
-                    }
-                }
-                if ('Elevation' in control) {
-                    $("#elevationPropertyDiv").show();
+                string prop = Script.Write<string>("control['PaddingLeft']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#paddingLeftProperty").Val(prop);
+                else
+                    new jQuery("#paddingLeftProperty").Val("");
 
-                    var prop2 = control['Elevation'];
-                    if (System.String.isNullOrEmpty(prop2)) {
-                        $("#elevationProperty").val(prop2);
-                    } else {
-                        $("#elevationProperty").val("");
-                    }
-                }
-                if ('FontColor' in control) {
-                    $("#fontColorPropertyDiv").show();
+                prop = Script.Write<string>("control['PaddingTop']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#paddingTopProperty").Val(prop);
+                else
+                    new jQuery("#paddingTopProperty").Val("");
 
-                    var prop3 = control['FontColor'];
-                    if (System.String.isNullOrEmpty(prop3)) {
-                        $("#fontColorProperty").val(prop3);
-                    } else {
-                        $("#fontColorProperty").val("");
-                    }
-                }
-                if ('FontSize' in control) {
-                    $("#fontSizePropertyDiv").show();
+                prop = Script.Write<string>("control['PaddingRight']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#paddingRightProperty").Val(prop);
+                else
+                    new jQuery("#paddingRightProperty").Val("");
 
-                    var prop4 = control['FontSize'];
-                    if (System.String.isNullOrEmpty(prop4)) {
-                        $("#fontSizeProperty").val(prop4);
-                    } else {
-                        $("#fontSizeProperty").val("");
-                    }
-                }
-                if ('Height' in control) {
-                    $("#heightPropertyDiv").show();
+                prop = Script.Write<string>("control['PaddingBottom']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#paddingBottomProperty").Val(prop);
+                else
+                    new jQuery("#paddingBottomProperty").Val("");
+            }
+            if (Script.Write<bool>("'Width' in control"))
+            {
+                new jQuery("#positionPropertyDiv").Show();
 
-                    if (System.String.isNullOrEmpty(control.getHeight())) {
-                        $("#heightProperty").val(control.getHeight());
-                    } else {
-                        $("#heightProperty").val("");
-                    }
-                }
-                if ('HorizontalAlignment' in control) {
-                    $("#horizontalAlignmentPropertyDiv").show();
+                if (string.IsNullOrEmpty(control.Width))
+                    new jQuery("#widthProperty").Val(control.Width);
+                else
+                    new jQuery("#widthProperty").Val("");
 
-                    var prop5 = control['HorizontalAlignment'];
-                    if (System.String.isNullOrEmpty(prop5)) {
-                        $("#horizontalAlignmentProperty").val(prop5);
-                    } else {
-                        $("#horizontalAlignmentProperty").val("left");
-                    }
-                }
-                if ('HorizontalTextAlignment' in control) {
-                    $("#horizontalTextAlignmentPropertyDiv").show();
+                if (string.IsNullOrEmpty(control.Height))
+                    new jQuery("#heightProperty").Val(control.Height);
+                else
+                    new jQuery("#heightProperty").Val("");
 
-                    var prop6 = control['HorizontalTextAlignment'];
-                    if (System.String.isNullOrEmpty(prop6)) {
-                        $("#horizontalTextAlignmentProperty").val(prop6);
-                    } else {
-                        $("#horizontalTextAlignmentProperty").val("center");
-                    }
-                }
-                if ('Inset' in control) {
-                    $("#insetPropertyDiv").show();
+                if (string.IsNullOrEmpty(control.Left))
+                    new jQuery("#widthProperty").Val(control.Left);
+                else
+                    new jQuery("#widthProperty").Val("");
 
-                    var prop7 = control['Inset'];
-                    if (System.String.isNullOrEmpty(prop7)) {
-                        $("#insetProperty").val(prop7);
-                    } else {
-                        $("#insetProperty").val("");
-                    }
-                }
-                if ('Source' in control) {
-                    $("#sourcePropertyDiv").show();
+                if (string.IsNullOrEmpty(control.Top))
+                    new jQuery("#widthProperty").Val(control.Top);
+                else
+                    new jQuery("#widthProperty").Val("");
 
-                    var prop8 = control['Source'];
-                    if (System.String.isNullOrEmpty(prop8) && System.String.contains(prop8,"C:\\")) {
-                        $("#fileSourceProperty").val(prop8);
-                    } else {
-                        $("#fileSourceProperty").val("");
-                    }
-                }
-                if ('Text' in control) {
-                    $("#textPropertyDiv").show();
+                if (string.IsNullOrEmpty(control.Right))
+                    new jQuery("#widthProperty").Val(control.Right);
+                else
+                    new jQuery("#widthProperty").Val("");
 
-                    var prop9 = control['Text'];
-                    if (System.String.isNullOrEmpty(prop9)) {
-                        $("#textProperty").val(prop9);
-                    } else {
-                        $("#textProperty").val("");
-                    }
-                }
-                if ('VerticalAlignment' in control) {
-                    $("#verticalAlignmentPropertyDiv").show();
+                if (string.IsNullOrEmpty(control.Bottom))
+                    new jQuery("#widthProperty").Val(control.Bottom);
+                else
+                    new jQuery("#widthProperty").Val("");
+            }
 
-                    var prop10 = control['VerticalAlignment'];
-                    if (System.String.isNullOrEmpty(prop10)) {
-                        $("#verticalAlignmentProperty").val(prop10);
-                    } else {
-                        $("#verticalAlignmentProperty").val("center");
-                    }
-                }
+            if (Script.Write<bool>("'Color' in control"))
+            {
+                new jQuery("#colorPropertyDiv").Show();
+
+                string prop = Script.Write<string>("control['Color']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#colorProperty").Val(prop);
+                else
+                    new jQuery("#colorProperty").Val("");
+            }
+            if (Script.Write<bool>("'Elevation' in control"))
+            {
+                new jQuery("#elevationPropertyDiv").Show();
+
+                string prop = Script.Write<string>("control['Elevation']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#elevationProperty").Val(prop);
+                else
+                    new jQuery("#elevationProperty").Val("");
+            }
+            if (Script.Write<bool>("'FontColor' in control"))
+            {
+                new jQuery("#fontColorPropertyDiv").Show();
+
+                string prop = Script.Write<string>("control['FontColor']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#fontColorProperty").Val(prop);
+                else
+                    new jQuery("#fontColorProperty").Val("");
+            }
+            if (Script.Write<bool>("'FontSize' in control"))
+            {
+                new jQuery("#fontSizePropertyDiv").Show();
+
+                string prop = Script.Write<string>("control['FontSize']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#fontSizeProperty").Val(prop);
+                else
+                    new jQuery("#fontSizeProperty").Val("");
+            }
+            if (Script.Write<bool>("'Height' in control"))
+            {
+                new jQuery("#heightPropertyDiv").Show();
+
+                if (string.IsNullOrEmpty(control.Height))
+                    new jQuery("#heightProperty").Val(control.Height);
+                else
+                    new jQuery("#heightProperty").Val("");
+            }
+            if (Script.Write<bool>("'HorizontalAlignment' in control"))
+            {
+                new jQuery("#horizontalAlignmentPropertyDiv").Show();
+
+                string prop = Script.Write<string>("control['HorizontalAlignment']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#horizontalAlignmentProperty").Val(prop);
+                else
+                    new jQuery("#horizontalAlignmentProperty").Val("left");
+            }
+            if (Script.Write<bool>("'HorizontalTextAlignment' in control"))
+            {
+                new jQuery("#horizontalTextAlignmentPropertyDiv").Show();
+
+                string prop = Script.Write<string>("control['HorizontalTextAlignment']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#horizontalTextAlignmentProperty").Val(prop);
+                else
+                    new jQuery("#horizontalTextAlignmentProperty").Val("center");
+            }
+            if (Script.Write<bool>("'Inset' in control"))
+            {
+                new jQuery("#insetPropertyDiv").Show();
+
+                string prop = Script.Write<string>("control['Inset']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#insetProperty").Val(prop);
+                else
+                    new jQuery("#insetProperty").Val("");
+            }
+            if (Script.Write<bool>("'Source' in control"))
+            {
+                new jQuery("#sourcePropertyDiv").Show();
+
+                string prop = Script.Write<string>("control['Source']");
+                if (string.IsNullOrEmpty(prop) && prop.Contains("C:\\"))
+                    new jQuery("#fileSourceProperty").Val(prop);
+                else
+                    new jQuery("#fileSourceProperty").Val("");
+            }
+            if (Script.Write<bool>("'Text' in control"))
+            {
+                new jQuery("#textPropertyDiv").Show();
+
+                string prop = Script.Write<string>("control['Text']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#textProperty").Val(prop);
+                else
+                    new jQuery("#textProperty").Val("");
+            }
+            if (Script.Write<bool>("'VerticalAlignment' in control"))
+            {
+                new jQuery("#verticalAlignmentPropertyDiv").Show();
+
+                string prop = Script.Write<string>("control['VerticalAlignment']");
+                if (string.IsNullOrEmpty(prop))
+                    new jQuery("#verticalAlignmentProperty").Val(prop);
+                else
+                    new jQuery("#verticalAlignmentProperty").Val("center");
+            }*/
             },
             setBindings: function () {
                 /* ********* Margin **********/
@@ -751,8 +827,7 @@ Bridge.assembly("SiteBuilder", function ($asm, globals) {
                 return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
             },
             lowerFirst: function (str) {
-                str = System.String.concat(str.charAt(0).toLowerCase(), str.substr(1));
-                return str;
+                return System.String.concat(str.charAt(0).toLowerCase(), str.substr(1));
             },
             populateList: function (childrenArray, iteration) {
                 for (var i = 0; i < childrenArray.length; i = (i + 1) | 0) {
@@ -1079,7 +1154,7 @@ Bridge.assembly("SiteBuilder", function ($asm, globals) {
         config: {
             properties: {
                 Color: null,
-                Elevation: 0,
+                Elevation: null,
                 Inset: false,
                 PaddingLeft: null,
                 PaddingTop: null,
@@ -1105,7 +1180,7 @@ Bridge.assembly("SiteBuilder", function ($asm, globals) {
         config: {
             properties: {
                 Aspect: null,
-                Elevation: 0,
+                Elevation: null,
                 Source: null
             }
         },

@@ -50,8 +50,7 @@ namespace SiteBuilder
 
         public static string LowerFirst(this string str)
         {
-            str = str.CharAt(0).ToLowerCase() + str.Substr(1);
-            return str;
+            return str.CharAt(0).ToLowerCase() + str.Substr(1);
         }
 
         public static void PopulateList(jQuery childrenArray, int iteration)

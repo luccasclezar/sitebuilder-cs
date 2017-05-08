@@ -47,7 +47,7 @@ namespace SiteBuilder
     public class ContainerControl : Control
     {
         public string Color { get; set; }
-        public int Elevation { get; set; }
+        public string Elevation { get; set; }
         public bool Inset { get; set; }
 
         public string PaddingLeft { get; set; }
@@ -69,7 +69,7 @@ namespace SiteBuilder
         public static string DefaultImage = "../images/default_image.jpg";
 
         public string Aspect { get; set; }
-        public int Elevation { get; set; }
+        public string Elevation { get; set; }
         public string Source { get; set; }
 
         public ImageControl()
